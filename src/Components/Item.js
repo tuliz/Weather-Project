@@ -9,7 +9,7 @@ margin:10px;
         margin: 1%;
         padding: 0.3rem;
         width: 15vw;
-        height: 50vh;
+        height: 35vh;
     }
     .cardHeader{
         display: flex; 
@@ -24,8 +24,14 @@ margin:10px;
         align-items: center;
         justify-content: center;
     }
-    .Image{
-    }
+    
+    @media(max-width: 700px){
+           .Card{
+               width:40vw;
+               height:65vw;
+           }
+}
+
 `;
 
 const Item = (props)=>{

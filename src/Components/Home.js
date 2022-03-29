@@ -58,6 +58,18 @@ const Div = styled.div`
       display:block;
       font-weight:bold;
   }
+  @media(max-width: 700px){
+    .upperHome{
+      display:block;
+      text-align:center;
+    }
+    .weatherDiv{
+      display:block;
+      margin:auto;
+      text-align:center;
+
+    }   
+}
 `;
 
 
@@ -65,24 +77,28 @@ const Div = styled.div`
  const Home = ()=>{
 
   const dispatch = useDispatch();
-  const {cityId} = useParams();
-
-  console.log(cityId);
+  const {cityKey, cityName} = useParams();
+  
+  if(cityKey && cityName){
+    dispatch(setCity({key: cityKey, name: cityName}));
+  }
 
   const [errorValidation, setErrorValidation] = useState('');
 
   const fiveDays = useSelector(state=>state.home.fiveDaysWeather);
   const city =  useSelector(state=>state.home.city);
+  console.log(city);
   const autosearchList = useSelector(state=>state.home.autosearchList);
   const favoritesList = useSelector(state=>state.favorites.favoritesList);
   const isFavorite = useSelector(state=>state.favorites.isFavorite);
   const tempMode = useSelector(state=>state.home.metric);
-
+  
   useEffect(()=>{
     if(city.key != ''){
-      fiveDaysRequest(city.key, tempMode).then(result=>dispatch(setFiveDaysWeather(result.data.DailyForecasts)));
+      fiveDaysRequest(city.key, tempMode).then(result=>dispatch(setFiveDaysWeather(result.data.DailyForecasts))).catch(error=>console.log(error));
+      console.log('first initial by geolocation');
        }
-     }, [fiveDays]);
+     }, []);
 
      useEffect(() => 
       favoritesList.forEach(favorite=>{
@@ -97,12 +113,12 @@ const Div = styled.div`
 
   const getCitiesList = (e) =>{
     if(e.target.value !== ''){ 
-    autocompleteRequest(e.target.value).then(result=>dispatch(setAutosearchList(result.data)));
+    autocompleteRequest(e.target.value).then(result=>dispatch(setAutosearchList(result.data))).catch(error=>console.log(error))
     }
   }
 
   const getSearchedCity = (e, value) =>{
-    fiveDaysRequest(value.Key, tempMode).then(result=>dispatch((setFiveDaysWeather(result.data.DailyForecasts))));
+    fiveDaysRequest(value.Key, tempMode).then(result=>dispatch(setFiveDaysWeather(result.data.DailyForecasts))).catch(error=>console.log(error))
     checkIsFavorite()? dispatch(setIsFavorite(true)) : dispatch(setIsFavorite(false));
     dispatch(setCity({key : value.Key, name: value.LocalizedName}));
 
@@ -177,7 +193,6 @@ const Div = styled.div`
         <Button variant="contained" className='fcBtn' onClick={() => handleFCMode()}>F/C</Button>
        </div>
        {favoriteButton}
-       
        </div>
        <div className='weatherDiv'>
           {fiveDays.map(item=>{
@@ -186,7 +201,7 @@ const Div = styled.div`
                day={moment(item.Date).format('dddd')}
                date={moment.parseZone(item.Date).format('DD/MM/YYYY')} 
                img={item.Day.Icon} 
-               degrees={`${item.Temperature.Maximum.Value}${tempMode ? '°C`' : '°F'}`} 
+               degrees={`${item.Temperature.Maximum.Value}${tempMode ? '°C' : '°F'}`} 
                weather={item.Day.IconPhrase}
                />
            })}

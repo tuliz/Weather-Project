@@ -66,6 +66,14 @@ const Dark = styled.div`
     Button:hover{
         color:white;
     }
+    @media(max-width: 700px){
+        #header{
+            width:100%;
+        }
+        .outlet{
+            width:100%;
+        }
+    }
 `;
 
 
