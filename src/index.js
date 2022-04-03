@@ -1,15 +1,30 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {HashRouter} from 'react-router-dom';
+import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from './store';
 import App from './Components/App';
+import Home from './Components/Home';
+import Favorites from './Components/Favorites';
+import Notfound from './Components/Notfound';
 
 ReactDOM.render(
-<HashRouter>
+<BrowserRouter>
   <Provider store={store}>
-    <App/>
+  <Routes>
+
+      <Route path='/' element={<App/>}>
+
+        <Route index element={<Home/>}/>
+        <Route path='/home' element={<Home/>}/>
+        <Route path='/home/:cityKey&:cityName' element={<Home/>}/>
+        <Route path='/favorites' element={<Favorites/>}/>
+        <Route path='*' element={<Notfound/>}/>
+
+      </Route>
+      
+    </Routes>
   </Provider>
-</HashRouter>
+</BrowserRouter>
 , 
 document.getElementById('root'));

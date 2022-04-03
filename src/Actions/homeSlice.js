@@ -1,10 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-
+import { geolocationRequest } from "../Api";
 export const homeSlice = createSlice({
     name : 'home',
     initialState : {
         metric: true,
-        mode: 'light',
         fiveDaysWeather: [],
         autosearchList: [],
         city: {key: null, name: null},
@@ -18,9 +17,6 @@ export const homeSlice = createSlice({
         },
         changeTempMode: (state)=>{
             state.metric = !state.metric;
-        },
-        changeMode: (state, action)=>{
-            state.mode = action.payload;
         },
         setCity: (state, action)=>{
             state.city.key = action.payload.key;

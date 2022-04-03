@@ -4,7 +4,7 @@ const Axios = axios.create({
     baseURL : 'https://dataservice.accuweather.com' 
 });
 
-const API_KEY = 'ciA3cDiAo9WnAjFJgiXBhMLcol0WwoKn';
+const API_KEY = 'gnPLoc6ySYjsNwWK3bCAhQhjV7g3o9TA';
 const AUTOCOMPLETE_URL = '/locations/v1/cities/autocomplete';
 const CURRENT_WEATHER_URL = '/currentconditions/v1/';
 const FIVE_DAYS_URL = '/forecasts/v1/daily/5day/';

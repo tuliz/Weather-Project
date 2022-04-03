@@ -1,51 +1,46 @@
 import React, { useEffect } from 'react';
 import Header from './Header';
-import Home from './Home';
-import Favorites from './Favorites';
-import Notfound from './Notfound';
-import { Routes, Route } from 'react-router-dom';
-import { setCity } from '../Actions/homeSlice';
-import { geolocationRequest } from "../Api";
-import { useDispatch } from 'react-redux';
+import { Outlet } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from '@emotion/styled';
-import {useMediaQuery} from '@mui/material'
+import { geolocationRequest } from '../Api';
+import { changeGeolocationActivated, setError } from '../Actions/appSlice';
+import { setCity } from '../Actions/homeSlice';
 
 
-const Div = styled.div`
-body{
-margin:0px;
-
-}
-`;
 const App = ()=>{
   const dispatch = useDispatch();
-  
-  useEffect(()=>{
-    getCurrentGeoLocation();
-  }, []);
+  const mode = useSelector(state=>state.app.mode);
+  const error = useSelector((state)=>state.app.errorMsg);
 
-   const getCurrentGeoLocation = () =>{
-    navigator.geolocation.getCurrentPosition(position=>{
-     geolocationRequest(position.coords.latitude, position.coords.longitude)
-      .then(result=>{console.log(result)})//dispatch(setCity({key: result.data.Key, name: result.data.LocalizedName}))
-
-     })
+  const Div = styled.div`
+  .errorMsg{
+    color:red;
   }
+      margin:0px;
+      background-color: ${mode === 'light' ? 'white' : 'gray'}
+  
+`;
+
+useEffect(()=>{
+  navigator.geolocation.getCurrentPosition(position=>{
+    geolocationRequest(position.coords.latitude, position.coords.longitude)
+    .then(result=>{dispatch(setCity({key: result.data.Key, name: result.data.LocalizedName}))}).catch(err=>dispatch(setError(err.error)));
+    dispatch(changeGeolocationActivated('true'));
+
+       })
+  }, []);
+ 
 
 
-  return (
-   
+  const globalErr = (error ? <p className='errorMsg'>{error}</p> : null);
+
+  return (   
     <Div>
-  <Routes>
-    <Route path='/' element={<Header/>}>
-      <Route index element={<Home/>}/>
-      <Route path='/home' element={<Home/>}/>
-      <Route path='/home/:cityKey&:cityName' element={<Home/>}/>
-      <Route path='/favorites' element={<Favorites/>}/>
-      <Route path='*' element={<Notfound/>}/>
-    </Route>
-  </Routes>
-  </Div>
+      <Header/>
+      {globalErr}
+      <Outlet/>
+    </Div>
   );
 }
 

@@ -48,7 +48,7 @@ const Favorites = ()=>{
             key={Math.random()}
             cityname={favoritesList[index].name}
             img={item[0].WeatherIcon}
-            degrees={item[0].Temperature.Metric.Value}
+            degrees={`${item[0].Temperature.Metric.Value}°C`}
             weather={item[0].WeatherText}
             />
             </Link>

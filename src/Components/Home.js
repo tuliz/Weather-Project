@@ -4,10 +4,11 @@ import {Favorite, FavoriteBorder} from '@mui/icons-material';
 import Item from './Item';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect, useState} from 'react';
+import { useEffect, useState, useLayoutEffect} from 'react';
 import { setCity, setFiveDaysWeather, setAutosearchList, changeTempMode} from '../Actions/homeSlice';
 import { addFavorite, removeFavorite, setIsFavorite} from '../Actions/favoritesSlice';
-import { fiveDaysRequest, autocompleteRequest } from '../Api';
+import { changeGeolocationActivated, setError} from '../Actions/appSlice';
+import { fiveDaysRequest, autocompleteRequest, geolocationRequest } from '../Api';
 import moment from 'moment';
 import Joi from 'joi';
 
@@ -87,68 +88,64 @@ const Div = styled.div`
 
   const fiveDays = useSelector(state=>state.home.fiveDaysWeather);
   const city =  useSelector(state=>state.home.city);
-  console.log(city);
   const autosearchList = useSelector(state=>state.home.autosearchList);
   const favoritesList = useSelector(state=>state.favorites.favoritesList);
   const isFavorite = useSelector(state=>state.favorites.isFavorite);
   const tempMode = useSelector(state=>state.home.metric);
-  
+
+
   useEffect(()=>{
-    if(city.key != ''){
-      fiveDaysRequest(city.key, tempMode).then(result=>dispatch(setFiveDaysWeather(result.data.DailyForecasts))).catch(error=>console.log(error));
-      console.log('first initial by geolocation');
+    if(city.key){
+      fiveDaysRequest(city.key, tempMode).then(result=>dispatch(setFiveDaysWeather(result.data.DailyForecasts))).catch(err=>dispatch(setError(err.error)));
        }
-     }, []);
+     }, [tempMode]);
 
-     useEffect(() => 
-      favoritesList.forEach(favorite=>{
-        if(favorite.key === city.key)
-          dispatch(setIsFavorite(true));
-          
-        else
-          dispatch(setIsFavorite(false));
 
-     }), []);
-  
+useEffect(()=>{
+  checkIsFavorite(city.key);
+}, [city]);
+
 
   const getCitiesList = (e) =>{
     if(e.target.value !== ''){ 
-    autocompleteRequest(e.target.value).then(result=>dispatch(setAutosearchList(result.data))).catch(error=>console.log(error))
+    autocompleteRequest(e.target.value).then(result=>dispatch(setAutosearchList(result.data))).catch(err=>dispatch(setError(err.error)));
     }
   }
 
   const getSearchedCity = (e, value) =>{
-    fiveDaysRequest(value.Key, tempMode).then(result=>dispatch(setFiveDaysWeather(result.data.DailyForecasts))).catch(error=>console.log(error))
-    checkIsFavorite()? dispatch(setIsFavorite(true)) : dispatch(setIsFavorite(false));
+    fiveDaysRequest(value.Key, tempMode).then(result=>dispatch(setFiveDaysWeather(result.data.DailyForecasts))).catch(err=>dispatch(setError(err.error)));
     dispatch(setCity({key : value.Key, name: value.LocalizedName}));
-
+    //checkIsFavorite(value.Key);
 
   }
 
 
   const checkValidation = (value) =>{
-    let isValide = true;
+    let isValid = true;
     let error = '';
 
     if (value) {
         const searchObj = validator.search.validate(value);
         if (searchObj.error) {
             error = searchObj.error.message;
-            isValide = false;
+            isValid = false;
         }
     }
-    (!isValide) ? setErrorValidation(error) : setErrorValidation('');
+    (!isValid) ? setErrorValidation(error) : setErrorValidation('');
 }
 
-  const checkIsFavorite = () =>{
-    favoritesList.forEach(favorite=>{
-      if(favorite.key === city.key){
-        return true;
+  const checkIsFavorite = (key) =>{
+    for(const favorite of favoritesList){
+      if(favorite.key === key){
+      dispatch(setIsFavorite(true));
+      return true;
       }
-    })
+    }
+    dispatch((setIsFavorite(false)));
     return false;
- 
-  }
+    
+    }
+   
   
 
   const handleFCMode = ()=>{
