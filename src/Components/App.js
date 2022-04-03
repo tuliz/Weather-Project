@@ -4,7 +4,7 @@ import { Outlet } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from '@emotion/styled';
 import { geolocationRequest } from '../Api';
-import { changeGeolocationActivated, setError } from '../Actions/appSlice';
+import { setError } from '../Actions/appSlice';
 import { setCity } from '../Actions/homeSlice';
 
 
@@ -26,8 +26,6 @@ useEffect(()=>{
   navigator.geolocation.getCurrentPosition(position=>{
     geolocationRequest(position.coords.latitude, position.coords.longitude)
     .then(result=>{dispatch(setCity({key: result.data.Key, name: result.data.LocalizedName}))}).catch(err=>dispatch(setError(err.error)));
-    dispatch(changeGeolocationActivated('true'));
-
        })
   }, []);
  

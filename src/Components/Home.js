@@ -4,11 +4,11 @@ import {Favorite, FavoriteBorder} from '@mui/icons-material';
 import Item from './Item';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect, useState, useLayoutEffect} from 'react';
+import { useEffect, useState} from 'react';
 import { setCity, setFiveDaysWeather, setAutosearchList, changeTempMode} from '../Actions/homeSlice';
 import { addFavorite, removeFavorite, setIsFavorite} from '../Actions/favoritesSlice';
-import { changeGeolocationActivated, setError} from '../Actions/appSlice';
-import { fiveDaysRequest, autocompleteRequest, geolocationRequest } from '../Api';
+import {setError} from '../Actions/appSlice';
+import { fiveDaysRequest, autocompleteRequest} from '../Api';
 import moment from 'moment';
 import Joi from 'joi';
 
@@ -115,8 +115,6 @@ useEffect(()=>{
   const getSearchedCity = (e, value) =>{
     fiveDaysRequest(value.Key, tempMode).then(result=>dispatch(setFiveDaysWeather(result.data.DailyForecasts))).catch(err=>dispatch(setError(err.error)));
     dispatch(setCity({key : value.Key, name: value.LocalizedName}));
-    //checkIsFavorite(value.Key);
-
   }
 
 
@@ -176,7 +174,7 @@ useEffect(()=>{
         onChange = {getSearchedCity}
         sx={{width:'50%', margin:'auto'}}
         renderInput={(searchBy) =><div>
-         <p className='searchError'>{errorValidation}</p> 
+         <p className ='searchError'>{errorValidation}</p> 
          <TextField {...searchBy} onChange={getCitiesList} label="City" value={searchBy} 
           />
           </div>
