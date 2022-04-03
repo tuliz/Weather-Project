@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.js": "/Yarden-Tulchinsky-22-03-2022/static/js/main.665b4548.js",
-    "static/media/weather-icon.png": "/Yarden-Tulchinsky-22-03-2022/static/media/weather-icon.5d734ab46fe183d56805.png",
-    "static/media/17.png": "/Yarden-Tulchinsky-22-03-2022/static/media/17.4b8d4543699af9743509.png",
-    "static/media/41.png": "/Yarden-Tulchinsky-22-03-2022/static/media/41.da8960711b2a7bdd80c0.png",
-    "static/media/16.png": "/Yarden-Tulchinsky-22-03-2022/static/media/16.02f6796a4b217cbdd262.png",
-    "static/media/15.png": "/Yarden-Tulchinsky-22-03-2022/static/media/15.9aac7942a26db293440b.png",
-    "index.html": "/Yarden-Tulchinsky-22-03-2022/index.html",
-    "main.665b4548.js.map": "/Yarden-Tulchinsky-22-03-2022/static/js/main.665b4548.js.map"
+    "main.js": "/yourProjectName/static/js/main.885427ee.js",
+    "static/media/weather-icon.png": "/yourProjectName/static/media/weather-icon.5d734ab46fe183d56805.png",
+    "static/media/17.png": "/yourProjectName/static/media/17.4b8d4543699af9743509.png",
+    "static/media/41.png": "/yourProjectName/static/media/41.da8960711b2a7bdd80c0.png",
+    "static/media/16.png": "/yourProjectName/static/media/16.02f6796a4b217cbdd262.png",
+    "static/media/15.png": "/yourProjectName/static/media/15.9aac7942a26db293440b.png",
+    "index.html": "/yourProjectName/index.html",
+    "main.885427ee.js.map": "/yourProjectName/static/js/main.885427ee.js.map"
   },
   "entrypoints": [
-    "static/js/main.665b4548.js"
+    "static/js/main.885427ee.js"
   ]
 }
