@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.js": "/Yarden-Tulchinsky-22-03-2022/static/js/main.0afca3f4.js",
+    "main.js": "/Yarden-Tulchinsky-22-03-2022/static/js/main.b5c7974c.js",
     "static/media/weather-icon.png": "/Yarden-Tulchinsky-22-03-2022/static/media/weather-icon.5d734ab46fe183d56805.png",
     "static/media/17.png": "/Yarden-Tulchinsky-22-03-2022/static/media/17.4b8d4543699af9743509.png",
     "static/media/41.png": "/Yarden-Tulchinsky-22-03-2022/static/media/41.da8960711b2a7bdd80c0.png",
     "static/media/16.png": "/Yarden-Tulchinsky-22-03-2022/static/media/16.02f6796a4b217cbdd262.png",
     "static/media/15.png": "/Yarden-Tulchinsky-22-03-2022/static/media/15.9aac7942a26db293440b.png",
     "index.html": "/Yarden-Tulchinsky-22-03-2022/index.html",
-    "main.0afca3f4.js.map": "/Yarden-Tulchinsky-22-03-2022/static/js/main.0afca3f4.js.map"
+    "main.b5c7974c.js.map": "/Yarden-Tulchinsky-22-03-2022/static/js/main.b5c7974c.js.map"
   },
   "entrypoints": [
-    "static/js/main.0afca3f4.js"
+    "static/js/main.b5c7974c.js"
   ]
 }
